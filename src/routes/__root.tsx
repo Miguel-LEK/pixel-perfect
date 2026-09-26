@@ -77,23 +77,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Viralense — Health Screening Console" },
+      {
+        name: "description",
+        content:
+          "Viralense corporate health screening console for temperature, air quality, vitals and audio sensor readings.",
+      },
+      { name: "author", content: "Viralense" },
+      { property: "og:title", content: "Viralense — Health Screening Console" },
+      {
+        property: "og:description",
+        content:
+          "Live sensor monitoring and scan reports for on-site health screening.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+      },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
   }),
+
   shellComponent: RootShell,
   component: RootComponent,
   notFoundComponent: NotFoundComponent,
@@ -119,8 +133,45 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <div className="min-h-screen bg-background">
+        <header className="sticky top-0 z-10 border-b border-border bg-card/95 backdrop-blur">
+          <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-6">
+            <Link to="/" className="flex items-center gap-2.5">
+              <span className="flex size-7 items-center justify-center rounded-md bg-primary text-xs font-bold text-primary-foreground">
+                V
+              </span>
+              <span className="text-sm font-semibold tracking-tight text-foreground">
+                Viralense
+              </span>
+              <span className="ml-1 rounded border border-border px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
+                Screening Console
+              </span>
+            </Link>
+            <nav className="flex items-center gap-1">
+              <Link
+                to="/"
+                activeOptions={{ exact: true }}
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                activeProps={{ className: "bg-secondary text-foreground" }}
+              >
+                Live Dashboard
+              </Link>
+              <Link
+                to="/reports"
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+                activeProps={{ className: "bg-secondary text-foreground" }}
+              >
+                Scan Reports
+              </Link>
+            </nav>
+          </div>
+        </header>
+        <main className="mx-auto max-w-[1400px] px-6 py-8">
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+        </main>
+      </div>
     </QueryClientProvider>
   );
 }
+
